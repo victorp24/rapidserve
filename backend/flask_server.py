@@ -20,5 +20,6 @@ Stores users into database with correct fields
 def store_users():
     return "Hello, World!"
 
+
 if __name__ == '__main__':
-    app.run(host="0.0.0.0:PORT#")
+    app.run(host="0.0.0.0")
