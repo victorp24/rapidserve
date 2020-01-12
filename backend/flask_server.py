@@ -195,7 +195,6 @@ def get_transactions(userid):
         print("No transactions for given userid")
         return ''
 
-
 """
 PUT request which puts new table id in a user object given
 a user id field
@@ -219,7 +218,67 @@ def enter_waiter_fields(userid):
                     'role': req_data['role']})
 
 
+"""
+POST request for an order
+
+"""
+@app.route("/users/api/v1.0/new_order", methods=['POST'])
+def register_trregister_order():
+    print("Registering ")
+
+    mydb = myclient['rapidserve-db']
+    my_col = mydb['orders']
+
+    print(request.json)
+
+    req_data = request.get_json()
+    table_id = req_data['table_id']
+    waiter_id = req_data['waiter_id']
+
+    order = req_data['order']
+    ammount = req_data['ammount']
+    ammount_left = req_data['ammount_left']
+
+    return_order = {'table_id': table_id,
+                   'waiter_id': waiter_id,
+                   'order': order,
+                   'ammount': ammount,
+                   'ammount_left': ammount_left}
+
+    my_col.insert_one(return_order)
+
+    print("Registered order: {}".format(return_order))
+
+    return jsonify({'table_id': table_id,
+                   'waiter_id': waiter_id,
+                   'order': order,
+                   'ammount': ammount,
+                   'ammount_left': ammount_left})
+
+"""
+GET request for an order id
+
+"""
+@app.route("/users/api/v1.0/get_order/<orderid>", methods=['GET'])
+def get_order(orderid):
+    print(type(orderid))
+
+    mydb = myclient['rapidserve-db']
+    my_col = mydb['orders']
+
+    my_order = my_col.find_one({"table_id": orderid})
+
+    print(my_order)
+    print("GET request for ordetable_id: {}".format(orderid))
+
+    output = {'table_id': my_order['table_id'],
+                  'waiter_id': my_order['waiter_id'],
+                  'order': my_order['order'],
+                  'ammount': my_order['ammount'],
+                  'ammount_left': my_order['ammount_left']}
+
+    return jsonify(output)
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=80)
     # app.run(host="127.0.0.1", port=80)
-
