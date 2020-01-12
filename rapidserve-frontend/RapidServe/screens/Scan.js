@@ -100,8 +100,9 @@ class Scan extends React.Component {
     putTableId = () => {
         const table = {
             table_id: this.state.tableId
-        }
-        fetch("http://34.83.193.124/users/api/v1.0/33333333333333333", {
+        };
+        const userId = await AsyncStorage.getItem("myId");
+        fetch("http://34.83.193.124/users/api/v1.0/" + userId, {
             method: "PUT",
             headers: {'content-type': 'application/json'},
             body: JSON.stringify(table)
