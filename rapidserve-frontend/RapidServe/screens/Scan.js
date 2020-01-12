@@ -76,6 +76,21 @@ const styles = StyleSheet.create({
 });
 
 class Scan extends React.Component {
+    static navigationOptions = {
+        title: "",
+        headerTintColor: "#13C0EB",
+        headerStyle: {
+          backgroundColor: "#13C0EB",
+        },
+        headerBackTitleStyle: {
+            color: "white",
+            fontWeight: "bold"
+        },
+        headerBackImageStyle: {
+            tintColor: "white",
+        }
+      };
+
     state = {
         hasCameraPermission: null,
         scanned: false,
