@@ -1,6 +1,6 @@
 **Get User Exists**
 ----
-Returns true if a user exists and false otherwise
+Returns user object if a user exists and empty json otherwise
 
 * **URL**
 
@@ -23,7 +23,25 @@ Returns true if a user exists and false otherwise
 * **Response**
 
   * **Code:** 200 <br />
-    **Content:** `{id: 234893, exists: True}`
+    **Content:**
+    If user exists:
+    ```json
+    { 
+      "id": 2,
+      "full_name": "Victor Par",
+      "phone_number": "604-384-3483",
+      "credit": 40.30,
+      "email": "testing@testing.com",
+      "restaurant_id": 30483,
+      "table_id": 34893,
+      "role": 0 (0 if customer, 1 if waiter)
+    }
+    ```
+    If user does not exists:
+    ```json
+    {
+    }
+    ```
 
 **Get User Object**
 ----
@@ -72,7 +90,7 @@ Makes new user object from request json
 
     ```json
     { 
-      "id": 2,
+      "user_id": 2,
       "full_name": "Victor Par",
       "phone_number": "604-384-3483",
       "credit": 40.30,
@@ -89,7 +107,7 @@ Makes new user object from request json
     **Content:**
     ```json
     { 
-      "id": 2,
+      "user_id": 2,
       "full_name": "Victor Par",
       "phone_number": "604-384-3483",
       "credit": 40.30,
@@ -97,6 +115,42 @@ Makes new user object from request json
       "restaurant_id": 30483,
       "table_id": 34893,
       "role": 0 (0 if customer, 1 if waiter)
+    }
+    ```
+
+**Put new table id in user Object**
+----
+Puts new table id in user object
+
+* **URL**
+
+  /users/api/v1.0/
+
+* **Method**
+
+  `PUT`
+
+* **URL Params**
+
+  None
+
+* **Data Params**
+
+    ```json
+    { 
+      "user_id": 2,
+      "table_id": 34893
+    }
+    ```
+
+* **Response**
+
+  * **Code:** 200 <br />
+    **Content:**
+    ```json
+    { 
+      "user_id": 2,
+      "table_id": 34893
     }
     ```
 
