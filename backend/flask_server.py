@@ -12,6 +12,11 @@ from flask import Flask
 app = Flask(__name__)
 
 
+@app.route("/")
+def hello():
+    return "Hello, World!"
+
+
 """
 Stores users into database with correct fields
 
