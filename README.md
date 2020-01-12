@@ -6,7 +6,8 @@
 <h4 align="center">nwHacks 2020 Hackathon Project</h4>
 <h4 align="center">Main repository for the rapidserve application</h4>
 
-### [DevPost](https://devpost.com/software/rapidserve-g1skzh)
+### Useful Links
+* [DevPost](https://devpost.com/software/rapidserve-g1skzh)
 
 ### Team Members
 * Ross Mojgani
