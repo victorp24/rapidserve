@@ -1,5 +1,3 @@
-<h1 align="center">RapidServe</h1>
-
 <p align="center">
   <img width=290 height=83 src="rapidserve-frontend/RapidServe/images/logo.png" />
 </p>
