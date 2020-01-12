@@ -6,6 +6,8 @@
 <h4 align="center">nwHacks 2020 Hackathon Project</h4>
 <h4 align="center">Main repository for the rapidserve application</h4>
 
+### [DevPost](https://devpost.com/software/rapidserve-g1skzh)
+
 ### Team Members
 * Ross Mojgani
 * Dryden Wiebe
@@ -23,6 +25,3 @@ any item at their table. Once all the items at the customers table
 are paid for, the customer is free to go and the waiter/waitress
 does not need to be bothered and wait for each customer at a
 table to pay individually.
-
-
-https://devpost.com/software/rapidserve-g1skzh
