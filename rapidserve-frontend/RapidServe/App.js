@@ -6,6 +6,12 @@ import logo2 from "./images/logo2.png"
 import * as Facebook from "expo-facebook";
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
+import Scan from "./screens/Scan";
+import WaiterEntry from "./screens/WaiterEntry";
+import CustomerView from "./screens/CustomerView";
+import WaiterView from "./screens/WaiterView";
+import Pay from "./screens/Pay";
+console.disableYellowBox = true;
 
 const id = "407364903529255";
 
@@ -15,6 +21,7 @@ class AuthLoadingScreen extends Component {
   }
 
   _bootstrapAsync = async () => {
+    //await AsyncStorage.clear();
     const userId = await AsyncStorage.getItem("myId");
     this.props.navigation.navigate(userId ? "App" : "Auth");
   };
@@ -32,16 +39,16 @@ class AuthLoadingScreen extends Component {
 class SignInScreen extends React.Component {
   static navigationOptions = {
     title: "",
-    headerTintColor: "white",
+    headerTintColor: "#292E30",
     headerStyle: {
       backgroundColor: "#292E30",
     },
     headerBackTitleStyle: {
-        color: "white",
+        color: "#292E30",
         fontWeight: "bold"
     },
     headerBackImageStyle: {
-        tintColor: "white",
+        tintColor: "#292E30",
     }
   };
 
@@ -101,9 +108,14 @@ class SignInScreen extends React.Component {
       this.request('http://34.83.193.124/users/api/v1.0/exists/' + json.id, 'GET')
       .then( (user)  => {
         if(user) {
-          AsyncStorage.setItem("myId", user.user_id).then( () => {
-            Alert.alert('Logged in!', `Hi ${user.full_name}!`);
-            this.presentApp();
+          console.log("hi");
+          AsyncStorage.setItem("myRole", user.role.toString()).then( () => {
+            console.log("hello");
+            AsyncStorage.setItem("myId", user.user_id).then( () => {
+              console.log("bye");
+              Alert.alert('Logged in!', `Hi ${user.full_name}!`);
+              this.presentApp();
+            });
           });
         } else {
           const jsonBody =  {
@@ -122,7 +134,7 @@ class SignInScreen extends React.Component {
             AsyncStorage.setItem("myId", user.user_id).then( () => {
               console.log('HEYYYY');
               Alert.alert('Logged in!', `Hi ${user.full_name}!`);
-              this.presentApp();
+              this.presentWelcome();
             });
           })
         }
@@ -135,6 +147,10 @@ class SignInScreen extends React.Component {
 
   presentApp() {
     this.props.navigation.navigate("App");
+  }
+
+  presentWelcome() {
+    this.props.navigation.navigate("Welcome");
   }
 
   render() {
@@ -157,12 +173,22 @@ const AuthStack = createStackNavigator({
   SignIn: SignInScreen,
 });
 
+const AppStack = createStackNavigator({
+  Scan: Scan,
+  WaiterEntry: WaiterEntry,
+  CustomerView: CustomerView,
+  WaiterView: WaiterView,
+  Pay: Pay,
+})
+
+
 const AppContainer = createAppContainer(
   createSwitchNavigator(
     {
       AuthLoading: AuthLoadingScreen,
       Auth: AuthStack,
-      App: Welcome,
+      App: AppStack,
+      Welcome: Welcome,
     },
     {
       initialRouteName: "AuthLoading",
