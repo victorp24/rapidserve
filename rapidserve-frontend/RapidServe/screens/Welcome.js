@@ -1,9 +1,40 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, Picker, TouchableOpacity, TextInput, KeyboardAvoidingView, ScrollView} from 'react-native';
+import { StyleSheet, Text, View, Image, Picker, TouchableOpacity, TextInput, KeyboardAvoidingView, ScrollView, AsyncStorage, Alert } from 'react-native';
 import logo from "../images/logo.png";
 import { Dropdown } from "react-native-material-dropdown";
 
 export default class Welcome extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            phone_number: "",
+            role: "",
+            restaurant_id: "",
+        }
+    }
+
+    updateProfile = async() => {
+        const userId = await AsyncStorage.getItem("myId");
+        const { navigation } = this.props;
+        const body = {
+            phone_number: this.state.phone_number,
+            role: this.state.role,
+            restaurant_id: this.state.restaurant_id,
+        }
+        fetch("http://34.83.193.124/users/api/v1.0/waiter/" + userId, {
+            method: "PUT",
+            headers: {'content-type': 'application/json'},
+            body: JSON.stringify(body)
+        }).then(() => {
+            AsyncStorage.setItem("myRole", this.state.role.toString()).then( () => {
+                Alert.alert("Success!", "Profile Updated");
+                this.props.navigation.navigate('App');
+            })
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
     render() {
 
         let roles = [{
@@ -26,13 +57,22 @@ export default class Welcome extends Component {
                             itemColor = "black"
                             selectedItemColor = "black"
                             disabledItemColor = "black"
+                            onChangeText = { (userRole) => {
+                                if(userRole === "As a Customer") {
+                                    this.setState({role: 0});
+                                } else {
+                                    this.setState({role: 1});
+                                }
+                            }}
                         />
                         <View style = {{height: 10}}></View>
-                        <Text style = {{color: "#FFFFFF"}}>Restaurant ID</Text>
+                        <Text style = {{color: "#FFFFFF"}}>Restaurant ID (for waiters)</Text>
                         <TextInput
                             style = {styles.textinput}
                             placeholder = "Only waiters must fill this in"
                             maxLength = {12}
+                            onChangeText = {(id) => this.setState({restaurant_id: id})}
+                            value = {this.state.restaurant_id}
                         />
                         <View style = {{height: 10}}></View>
                         <Text style = {{color: "#FFFFFF"}}>Mobile Number</Text>
@@ -40,9 +80,11 @@ export default class Welcome extends Component {
                             style = {styles.textinput}
                             placeholder = "Enter your number"
                             maxLength = {12}
+                            onChangeText = {(num) => this.setState({phone_number: num})}
+                            value = {this.state.phone_number}
                         />
                         <View style = {{alignItems: "center"}}>
-                            <TouchableOpacity onPress = {() => this.logIn()}>
+                            <TouchableOpacity onPress = {() => this.updateProfile()}>
                                 <View style = {{width: "70%", borderRadius: 5, paddingHorizontal: 30, paddingVertical: 10, backgroundColor: "#13C0EB", justifyContent: "center", alignItems: "center" }}>
                                     <Text style = {{color: "#FFFFFF", fontWeight: "bold", fontSize: 14}}>Submit</Text>
                                 </View>

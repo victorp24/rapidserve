@@ -114,7 +114,7 @@ class CustomerView extends React.Component {
     _getData = async () => {
         try {
             const { navigation } = this.props;
-            this.request('http://34.83.193.124/users/api/v1.0/get_order/155', 'GET').then(
+            this.request('http://34.83.193.124/users/api/v1.0/get_order/' + navigation.getParam("tableId", "155"), 'GET').then(
                 (info) => {
                     this.setState({dataSource: info})
                     this.setState({order: info["order"]})
