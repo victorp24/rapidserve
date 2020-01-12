@@ -46,7 +46,7 @@ table to pay individually.
   * The user can pay for their items and the waiter/waitress can see if the table
   has been paid for and know the customers are good to go.
 
-* API Details **(Flask Python API)**
+* API Details **(Flask/Python API)**
   * The API for this application was implemented using the flask framework
   along with Python, there was documentation which the frontend used to
   make their HTTP requests, [API DOCUMENTATION](https://github.com/rossmojgani/rapidserve/blob/master/backend/API.md),
