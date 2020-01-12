@@ -8,11 +8,14 @@ requests
 """
 
 import json
+import enforce
 from flask import Flask
 from flask import request
 from flask import jsonify
 from flask_pymongo import PyMongo
 import pymongo
+
+from transactions import Transaction
 
 app = Flask(__name__)
 app.config["MONGO_DBNAME"] = 'rapidserve-db'
@@ -129,6 +132,68 @@ def enter_table_id(userid):
     return jsonify({'user_id': userid,
                     'table_id': req_data['table_id']})
 
+"""
+POST request which puts a transaction into transaction database
+with correct fields
+
+"""
+@app.route("/users/api/v1.0/new_transaction", methods=['POST'])
+def register_transaction():
+    print("Registering transaction")
+
+    mydb = myclient['rapidserve-db']
+    my_col = mydb['transaction']
+
+    print(request.json)
+
+    req_data = request.get_json()
+    user_id = req_data['user_id']
+    ammount = req_data['ammount']
+    restraunt_id = req_data['restraunt_id']
+    table_id = req_data['table_id']
+    date = req_data['date']
+    time = req_data['time']
+
+    return_transaction = {'user_id': user_id,
+                   'ammount': ammount,
+                   'restraunt_id': restraunt_id,
+                   'table_id': table_id,
+                   'date': date,
+                   'time': time}
+
+    my_col.insert_one(return_transaction)
+
+    print("Registered transaction: {}".format(return_transaction))
+
+    return jsonify({'user_id': user_id,
+                    'ammount': ammount,
+                    'restraunt_id': restraunt_id,
+                    'table_id': table_id,
+                    'date': date,
+                    'time': time})
+
+"""
+GET request to get all transactions of a user id
+
+"""
+@app.route("/users/api/v1.0/transaction_history/<userid>", methods=['GET'])
+def get_transactions(userid):
+    print(type(userid))
+
+    mydb = myclient['rapidserve-db']
+    my_col = mydb['transactions']
+
+    print(my_col.find({'user_id': userid}))
+    print("GET request for transactions userid: {}".format(userid))
+
+    if my_col.find({'user_id': userid}).count() > 0:
+
+        transactions = my_col.find({"user_id": userid})
+
+        return jsonify(transactions)
+    else:
+        print("No transactions for given userid")
+        return ''
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=80)
