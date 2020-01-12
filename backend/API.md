@@ -124,7 +124,7 @@ Puts new table id in user object
 
 * **URL**
 
-  /users/api/v1.0/
+  /users/api/v1.0/user_id
 
 * **Method**
 
@@ -132,13 +132,12 @@ Puts new table id in user object
 
 * **URL Params**
 
-  None
+  user_id
 
 * **Data Params**
 
     ```json
     { 
-      "user_id": 2,
       "table_id": 34893
     }
     ```
