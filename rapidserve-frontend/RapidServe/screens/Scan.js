@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, Button, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, Button, TouchableOpacity, AsyncStorage } from 'react-native';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 import { BarCodeScanner } from 'expo-barcode-scanner';
@@ -112,22 +112,22 @@ class Scan extends React.Component {
         alert(`Table ID: ${data} has been scanned!`);
     };
 
-    putTableId = () => {
+    putTableId = async () => {
         const table = {
             table_id: this.state.tableId
         };
-        const userId = await AsyncStorage.getItem("myId");
-        fetch("http://34.83.193.124/users/api/v1.0/" + userId, {
-            method: "PUT",
-            headers: {'content-type': 'application/json'},
-            body: JSON.stringify(table)
-        }).then((response) => {
-            alert('Put request gucci');
-            // this.props.navigation.navigate("CustomerView", {
-            //     tableId: response,
-            // })
-        }).catch(err => {
-            console.log(err);
+        AsyncStorage.getItem("myId").then((response) =>{
+            fetch("http://34.83.193.124/users/api/v1.0/" + response, {
+                method: "PUT",
+                headers: {'content-type': 'application/json'},
+                body: JSON.stringify(table)
+            }).then(() => {
+                this.props.navigation.navigate("CustomerView", {
+                    tableId: this.state.tableId
+                });
+            }).catch(err => {
+                console.log(err);
+            })
         })
     }
 
