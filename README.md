@@ -1,6 +1,9 @@
 <p align="center">
   <img width=290 height=83 src="rapidserve-frontend/RapidServe/images/logo.png" />
 </p>
+<p align="center">
+  <img src="rapidserve-frontend/RapidServe/images/nwHacks-winner-banner.png" />
+</p>
 <h1 align="center">Awarded "Best use of MongoDB" at nwHacks 2020</h1>
 <h3 align="center">Simple QR Code Bill Payment</h3>
 <h4 align="center">nwHacks 2020 Hackathon Project</h4>
@@ -10,9 +13,19 @@
 * [Github](https://github.com/rossmojgani/rapidserve)
 * [DevPost](https://devpost.com/software/rapidserve-g1skzh)
 
+### Motivation
+
+Have you ever been to a restaurant with a large group of people and found that paying the bill was a hassle? At the end of the meal, the waiter/waitress has to approach each individual person at the table and ask for the menu items they have ordered to charge them accordingly. Therefore the debit/credit machine is passed around to each person at the table, and in most cases the waiter/waitress only has one machine, so this in turn becomes a lengthy process. It is an inconvenience for the customers trying to leave quickly so that they may continue their night or day, and it is also an incovenience for the restaurant because it slows down their business. 
+
+This is where our app comes in. What if everyone at the table can pay at the same time through their phone? The idea is that each table will have an assigned QR code. At the start of the meal when the waiter/waitress takes everyone's orders, the waiter/waitress scans the QR code and is able to take the table's order and directly input the menu items into the app. At the end of the meal, everyone at the table can then scan the same QR code and pick which individual menu items to pay for. This allows for everyone to simultaneously pay for their individual orders, and also gives the opportunity to pay for their friends' orders as well. Finally, once everyone has paid, the waiter/waitress will be able to see this through the app and send a receipt to everyone with a click of a button. 
+
 ### Team Members
+
+#### Backend Developers
 * Ross Mojgani
 * Dryden Wiebe
+
+#### Frontend Developers
 * Victor Parangue
 * Aric Wolstenholme
 
